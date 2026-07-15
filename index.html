@@ -1,432 +1,92 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RH Prefeitura - Controle de Contratos e Afastamentos</title>
+    <title>RH Prefeitura - Controle de Contratos</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: #f0f4f8;
-            padding: 20px;
-            color: #1a202c;
-        }
-
-        .app-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            padding: 25px;
-        }
-
-        h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #2d3748;
-            border-bottom: 3px solid #e2e8f0;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        h1 i {
-            color: #2b6cb0;
-        }
-
-        .tabs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 10px;
-        }
-
-        .tab-btn {
-            padding: 10px 20px;
-            background: transparent;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            color: #4a5568;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-        }
-
-        .tab-btn:hover {
-            background: #edf2f7;
-        }
-
-        .tab-btn.active {
-            background: #2b6cb0;
-            color: white;
-            box-shadow: 0 4px 10px rgba(43, 108, 176, 0.3);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: #f7fafc;
-            border-radius: 16px;
-            padding: 20px;
-            border-left: 6px solid #2b6cb0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        }
-
-        .stat-card .label {
-            font-size: 13px;
-            color: #718096;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        .stat-card .value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1a202c;
-            margin-top: 6px;
-        }
-
-        .filters-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            align-items: center;
-            background: #f7fafc;
-            padding: 15px 20px;
-            border-radius: 16px;
-            margin-bottom: 25px;
-        }
-
-        .filters-bar select, .filters-bar input {
-            padding: 8px 14px;
-            border: 1px solid #e2e8f0;
-            border-radius: 30px;
-            background: white;
-            font-size: 14px;
-            outline: none;
-            transition: 0.2s;
-        }
-
-        .filters-bar select:focus, .filters-bar input:focus {
-            border-color: #2b6cb0;
-            box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15);
-        }
-
-        .btn {
-            padding: 8px 18px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: #2b6cb0;
-            color: white;
-        }
-        .btn-primary:hover {
-            background: #1a4f7a;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 14px rgba(43, 108, 176, 0.25);
-        }
-
-        .btn-success {
-            background: #38a169;
-            color: white;
-        }
-        .btn-success:hover {
-            background: #2f855a;
-        }
-
-        .btn-danger {
-            background: #e53e3e;
-            color: white;
-        }
-        .btn-danger:hover {
-            background: #c53030;
-        }
-
-        .btn-warning {
-            background: #d69e2e;
-            color: white;
-        }
-        .btn-warning:hover {
-            background: #b7791f;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #cbd5e0;
-            color: #4a5568;
-        }
-        .btn-outline:hover {
-            background: #edf2f7;
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            border-radius: 16px;
-            border: 1px solid #e2e8f0;
-            background: white;
-            margin-top: 15px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        th {
-            background: #f7fafc;
-            color: #2d3748;
-            font-weight: 600;
-            padding: 14px 12px;
-            text-align: left;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #edf2f7;
-            vertical-align: middle;
-        }
-
-        tr:hover td {
-            background: #f7fafc;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: #f0f4f8; padding: 20px; }
+        .app-container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 25px; }
+        h1 { font-size: 28px; font-weight: 700; color: #2d3748; border-bottom: 3px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }
+        h1 i { color: #2b6cb0; }
+        .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .tab-btn { padding: 10px 20px; background: transparent; border: none; border-radius: 30px; font-weight: 600; color: #4a5568; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .tab-btn:hover { background: #edf2f7; }
+        .tab-btn.active { background: #2b6cb0; color: white; box-shadow: 0 4px 10px rgba(43, 108, 176, 0.3); }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: #f7fafc; border-radius: 16px; padding: 20px; border-left: 6px solid #2b6cb0; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .stat-card .label { font-size: 13px; color: #718096; font-weight: 500; }
+        .stat-card .value { font-size: 28px; font-weight: 700; color: #1a202c; margin-top: 6px; }
+        .filters-bar { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; background: #f7fafc; padding: 15px 20px; border-radius: 16px; margin-bottom: 25px; }
+        .filters-bar input, .filters-bar select { padding: 8px 14px; border: 1px solid #e2e8f0; border-radius: 30px; background: white; font-size: 14px; outline: none; }
+        .filters-bar input:focus, .filters-bar select:focus { border-color: #2b6cb0; box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15); }
+        .btn { padding: 8px 18px; border: none; border-radius: 30px; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary { background: #2b6cb0; color: white; }
+        .btn-primary:hover { background: #1a4f7a; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(43, 108, 176, 0.25); }
+        .btn-success { background: #38a169; color: white; }
+        .btn-success:hover { background: #2f855a; }
+        .btn-danger { background: #e53e3e; color: white; }
+        .btn-danger:hover { background: #c53030; }
+        .btn-warning { background: #d69e2e; color: white; }
+        .btn-warning:hover { background: #b7791f; }
+        .btn-outline { background: transparent; border: 1px solid #cbd5e0; color: #4a5568; }
+        .btn-outline:hover { background: #edf2f7; }
+        .btn-sm { padding: 4px 12px; font-size: 12px; }
+        .table-wrapper { overflow-x: auto; border-radius: 16px; border: 1px solid #e2e8f0; background: white; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th { background: #f7fafc; color: #2d3748; font-weight: 600; padding: 14px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 12px; border-bottom: 1px solid #edf2f7; vertical-align: middle; }
+        tr:hover td { background: #f7fafc; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 30px; font-size: 12px; font-weight: 600; }
         .badge-green { background: #c6f6d5; color: #22543d; }
         .badge-yellow { background: #fefcbf; color: #975a16; }
         .badge-red { background: #fed7d7; color: #9b2c2c; }
         .badge-blue { background: #bee3f8; color: #2a4365; }
         .badge-gray { background: #e2e8f0; color: #2d3748; }
-
-        .alert-panel {
-            background: #ebf8ff;
-            border-radius: 16px;
-            padding: 20px;
-            border-left: 6px solid #2b6cb0;
-            margin-bottom: 25px;
-        }
-
-        .alert-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-top: 12px;
-        }
-
-        .alert-item {
-            background: white;
-            border-radius: 12px;
-            padding: 12px 16px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-        }
-
-        .alert-item .count {
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(3px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .modal.open {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 24px;
-            padding: 30px;
-            max-width: 550px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            animation: slideUp 0.25s ease;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-content h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #1a202c;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 16px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            font-size: 13px;
-            color: #4a5568;
-            margin-bottom: 5px;
-        }
-
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 14px;
-            transition: 0.2s;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            border-color: #2b6cb0;
-            box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1);
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: flex-end;
-            margin-top: 20px;
-        }
-
-        .search-box {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .search-box input {
-            flex: 1;
-            min-width: 200px;
-            padding: 10px 16px;
-            border: 1px solid #e2e8f0;
-            border-radius: 30px;
-            font-size: 14px;
-        }
-
-        .action-icons {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .action-icons .btn {
-            padding: 4px 10px;
-            font-size: 12px;
-        }
-
-        .historico-list {
-            background: #f7fafc;
-            border-radius: 12px;
-            padding: 12px 16px;
-            margin-top: 8px;
-            font-size: 13px;
-            max-height: 120px;
-            overflow-y: auto;
-        }
-
-        .historico-list p {
-            padding: 4px 0;
-            border-bottom: 1px dashed #e2e8f0;
-        }
-
-        @media (max-width: 700px) {
-            .tabs .tab-btn {
-                font-size: 12px;
-                padding: 6px 14px;
-            }
-            .card-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal.open { display: flex; }
+        .modal-content { background: white; border-radius: 24px; padding: 30px; max-width: 550px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.15); animation: slideUp 0.25s ease; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .modal-content h3 { font-size: 20px; margin-bottom: 20px; color: #1a202c; display: flex; align-items: center; gap: 10px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-weight: 600; font-size: 13px; color: #4a5568; margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px; }
+        .form-group input:focus, .form-group select:focus { border-color: #2b6cb0; box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1); }
+        .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+        .search-box { display: flex; gap: 10px; flex-wrap: wrap; }
+        .search-box input { flex: 1; min-width: 200px; padding: 10px 16px; border: 1px solid #e2e8f0; border-radius: 30px; font-size: 14px; }
+        .alert-panel { background: #ebf8ff; border-radius: 16px; padding: 20px; border-left: 6px solid #2b6cb0; margin-bottom: 25px; }
+        .alert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 12px; }
+        .alert-item { background: white; border-radius: 12px; padding: 12px 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .alert-item .count { font-size: 22px; font-weight: 700; }
+        .historico-list { background: #f7fafc; border-radius: 12px; padding: 12px 16px; margin-top: 8px; font-size: 13px; max-height: 120px; overflow-y: auto; }
+        .historico-list p { padding: 4px 0; border-bottom: 1px dashed #e2e8f0; }
+        @media (max-width: 700px) { .tabs .tab-btn { font-size: 12px; padding: 6px 14px; } .card-grid { grid-template-columns: 1fr 1fr; } }
     </style>
 </head>
 <body>
 <div class="app-container" id="app">
     <h1><i class="fas fa-briefcase"></i> Controle de Contratos e Afastamentos</h1>
-
-    <!-- TABS -->
     <div class="tabs">
         <button class="tab-btn active" data-tab="tab-dashboard"><i class="fas fa-chart-pie"></i> Dashboard</button>
         <button class="tab-btn" data-tab="tab-pss"><i class="fas fa-user-clock"></i> PSS</button>
         <button class="tab-btn" data-tab="tab-licencas"><i class="fas fa-calendar-alt"></i> Licenças</button>
         <button class="tab-btn" data-tab="tab-cessoes"><i class="fas fa-exchange-alt"></i> Cessões/Recepções</button>
-        <button class="tab-btn" data-tab="tab-arquivo"><i class="fas fa-archive"></i> Histórico/Arquivo</button>
+        <button class="tab-btn" data-tab="tab-arquivo"><i class="fas fa-archive"></i> Histórico</button>
         <button class="tab-btn" data-tab="tab-alertas"><i class="fas fa-bell"></i> Alertas</button>
     </div>
 
     <!-- DASHBOARD -->
     <div id="tab-dashboard" class="tab-content active">
-        <div class="card-grid" id="dashboardCards">
-            <!-- preenchido via js -->
-        </div>
+        <div class="card-grid" id="dashboardCards"></div>
         <div style="margin-top:20px; background:#f7fafc; border-radius:16px; padding:20px;">
-            <h4 style="margin-bottom:12px;"><i class="fas fa-clock"></i> Registros que vencem em breve</h4>
-            <div id="dashboardProximosVencimentos" style="display:flex; flex-wrap:wrap; gap:12px;"></div>
+            <h4><i class="fas fa-clock"></i> Registros que vencem em breve</h4>
+            <div id="dashboardProximosVencimentos" style="display:flex; flex-wrap:wrap; gap:12px; margin-top:10px;"></div>
         </div>
     </div>
 
@@ -434,9 +94,9 @@
     <div id="tab-pss" class="tab-content">
         <div class="filters-bar">
             <div class="search-box">
-                <input type="text" id="pssSearch" placeholder="Buscar por nome, matrícula, cargo..." oninput="renderPSS()">
+                <input type="text" id="pssSearch" placeholder="Buscar..." oninput="renderPSS()">
                 <select id="pssFilterSituacao" onchange="renderPSS()">
-                    <option value="">Todas situações</option>
+                    <option value="">Todas</option>
                     <option value="Ativo">Ativo</option>
                     <option value="Prorrogado">Prorrogado</option>
                     <option value="Encerrado">Encerrado</option>
@@ -446,8 +106,7 @@
             </div>
         </div>
         <div class="table-wrapper">
-            <table>
-                <thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Admissão</th><th>Término</th><th>Exoneração</th><th>Situação</th><th>Prorrogações</th><th>Ações</th></tr></thead>
+            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Admissão</th><th>Término</th><th>Situação</th><th>Prorrogações</th><th>Ações</th></tr></thead>
                 <tbody id="pssTableBody"></tbody>
             </table>
         </div>
@@ -468,13 +127,13 @@
             </div>
         </div>
         <div class="table-wrapper">
-            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Início</th><th>Término previsto</th><th>Motivo</th><th>Situação</th><th>Ações</th></tr></thead>
+            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Início</th><th>Término</th><th>Motivo</th><th>Situação</th><th>Ações</th></tr></thead>
                 <tbody id="licencasTableBody"></tbody>
             </table>
         </div>
     </div>
 
-    <!-- CESSÕES / RECEPÇÕES -->
+    <!-- CESSÕES -->
     <div id="tab-cessoes" class="tab-content">
         <div class="filters-bar">
             <div class="search-box">
@@ -485,16 +144,16 @@
                     <option value="Recepção">Recepção</option>
                 </select>
                 <select id="cessFilterSituacao" onchange="renderCessoes()">
-                    <option value="">Todas situações</option>
+                    <option value="">Todas</option>
                     <option value="Ativa">Ativa</option>
                     <option value="Encerrada">Encerrada</option>
                     <option value="Interrompida">Interrompida</option>
                 </select>
-                <button class="btn btn-primary" onclick="abrirModalCessao()"><i class="fas fa-plus"></i> Nova Cessão/Recepção</button>
+                <button class="btn btn-primary" onclick="abrirModalCessao()"><i class="fas fa-plus"></i> Nova Cessão</button>
             </div>
         </div>
         <div class="table-wrapper">
-            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Tipo</th><th>Órgão Origem</th><th>Órgão Destino</th><th>Início</th><th>Término previsto</th><th>Situação</th><th>Ações</th></tr></thead>
+            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Tipo</th><th>Origem</th><th>Destino</th><th>Início</th><th>Término</th><th>Situação</th><th>Ações</th></tr></thead>
                 <tbody id="cessoesTableBody"></tbody>
             </table>
         </div>
@@ -504,10 +163,10 @@
     <div id="tab-arquivo" class="tab-content">
         <div class="filters-bar">
             <input type="text" id="arquivoSearch" placeholder="Buscar no arquivo..." oninput="renderArquivo()" style="flex:1; padding:10px 16px; border-radius:30px; border:1px solid #e2e8f0;">
-            <button class="btn btn-outline" onclick="exportarRelatorio()"><i class="fas fa-file-export"></i> Exportar Relatório</button>
+            <button class="btn btn-outline" onclick="exportarRelatorio()"><i class="fas fa-file-export"></i> Exportar</button>
         </div>
         <div class="table-wrapper">
-            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Tipo</th><th>Data término</th><th>Motivo arquivamento</th><th>Detalhes</th></tr></thead>
+            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Tipo</th><th>Data término</th><th>Motivo</th></tr></thead>
                 <tbody id="arquivoTableBody"></tbody>
             </table>
         </div>
@@ -518,11 +177,6 @@
         <div class="alert-panel">
             <h4><i class="fas fa-exclamation-triangle" style="color:#d69e2e;"></i> Painel de Alertas</h4>
             <div class="alert-grid" id="alertGrid"></div>
-            <div style="margin-top:15px; display:flex; gap:12px; flex-wrap:wrap;">
-                <select id="alertMes" onchange="renderAlertas()"><option value="">Mês</option><option value="1">Janeiro</option><option value="2">Fevereiro</option><option value="3">Março</option><option value="4">Abril</option><option value="5">Maio</option><option value="6">Junho</option><option value="7">Julho</option><option value="8">Agosto</option><option value="9">Setembro</option><option value="10">Outubro</option><option value="11">Novembro</option><option value="12">Dezembro</option></select>
-                <select id="alertAno" onchange="renderAlertas()"><option value="">Ano</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option></select>
-                <select id="alertSituacao" onchange="renderAlertas()"><option value="">Todas situações</option><option value="Ativo">Ativo</option><option value="Prorrogado">Prorrogado</option><option value="Em andamento">Em andamento</option><option value="Ativa">Ativa</option></select>
-            </div>
         </div>
         <div id="alertasLista" style="margin-top:15px;"></div>
     </div>
@@ -531,21 +185,20 @@
 <!-- MODAL PSS -->
 <div class="modal" id="modalPSS">
     <div class="modal-content">
-        <h3><i class="fas fa-user-plus"></i> <span id="modalPssTitle">Novo Contrato PSS</span></h3>
-        <div class="form-group"><label>Nome</label><input id="pssNome"></div>
-        <div class="form-group"><label>Matrícula</label><input id="pssMatricula"></div>
-        <div class="form-group"><label>Cargo/Função</label><input id="pssCargo"></div>
-        <div class="form-group"><label>Data Admissão</label><input id="pssAdmissao" type="date"></div>
-        <div class="form-group"><label>Data Término</label><input id="pssTermino" type="date"></div>
+        <h3><i class="fas fa-user-plus"></i> <span id="modalPssTitle">Novo PSS</span></h3>
+        <input type="hidden" id="pssEditId">
+        <div class="form-group"><label>Nome</label><input id="pssNome" class="form-control"></div>
+        <div class="form-group"><label>Matrícula</label><input id="pssMatricula" class="form-control"></div>
+        <div class="form-group"><label>Cargo</label><input id="pssCargo" class="form-control"></div>
+        <div class="form-group"><label>Admissão</label><input id="pssAdmissao" type="date" class="form-control"></div>
+        <div class="form-group"><label>Término</label><input id="pssTermino" type="date" class="form-control"></div>
         <div class="form-group"><label>Situação</label>
-            <select id="pssSituacao"><option value="Ativo">Ativo</option><option value="Prorrogado">Prorrogado</option><option value="Encerrado">Encerrado</option><option value="Exonerado">Exonerado</option></select>
+            <select id="pssSituacao" class="form-control"><option value="Ativo">Ativo</option><option value="Prorrogado">Prorrogado</option><option value="Encerrado">Encerrado</option><option value="Exonerado">Exonerado</option></select>
         </div>
-        <div class="form-group"><label>Data Exoneração (se houver)</label><input id="pssExoneracao" type="date"></div>
         <div class="modal-actions">
             <button class="btn btn-outline" onclick="fecharModal('modalPSS')">Cancelar</button>
-            <button class="btn btn-primary" id="savePssBtn" onclick="salvarPSS()">Salvar</button>
+            <button class="btn btn-primary" onclick="salvarPSS()">Salvar</button>
         </div>
-        <div id="pssHistorico" style="margin-top:12px;"></div>
     </div>
 </div>
 
@@ -553,14 +206,15 @@
 <div class="modal" id="modalLicenca">
     <div class="modal-content">
         <h3><i class="fas fa-calendar-minus"></i> <span id="modalLicTitle">Nova Licença</span></h3>
-        <div class="form-group"><label>Nome</label><input id="licNome"></div>
-        <div class="form-group"><label>Matrícula</label><input id="licMatricula"></div>
-        <div class="form-group"><label>Cargo/Função</label><input id="licCargo"></div>
-        <div class="form-group"><label>Data Início</label><input id="licInicio" type="date"></div>
-        <div class="form-group"><label>Data Prevista Término</label><input id="licTermino" type="date"></div>
-        <div class="form-group"><label>Motivo</label><input id="licMotivo"></div>
+        <input type="hidden" id="licEditId">
+        <div class="form-group"><label>Nome</label><input id="licNome" class="form-control"></div>
+        <div class="form-group"><label>Matrícula</label><input id="licMatricula" class="form-control"></div>
+        <div class="form-group"><label>Cargo</label><input id="licCargo" class="form-control"></div>
+        <div class="form-group"><label>Início</label><input id="licInicio" type="date" class="form-control"></div>
+        <div class="form-group"><label>Término</label><input id="licTermino" type="date" class="form-control"></div>
+        <div class="form-group"><label>Motivo</label><input id="licMotivo" class="form-control"></div>
         <div class="form-group"><label>Situação</label>
-            <select id="licSituacao"><option value="Em andamento">Em andamento</option><option value="Encerrada">Encerrada</option><option value="Interrompida">Interrompida</option></select>
+            <select id="licSituacao" class="form-control"><option value="Em andamento">Em andamento</option><option value="Encerrada">Encerrada</option><option value="Interrompida">Interrompida</option></select>
         </div>
         <div class="modal-actions">
             <button class="btn btn-outline" onclick="fecharModal('modalLicenca')">Cancelar</button>
@@ -572,19 +226,20 @@
 <!-- MODAL CESSÃO -->
 <div class="modal" id="modalCessao">
     <div class="modal-content">
-        <h3><i class="fas fa-exchange-alt"></i> <span id="modalCessTitle">Nova Cessão/Recepção</span></h3>
-        <div class="form-group"><label>Nome</label><input id="cessNome"></div>
-        <div class="form-group"><label>Matrícula</label><input id="cessMatricula"></div>
-        <div class="form-group"><label>Cargo/Função</label><input id="cessCargo"></div>
+        <h3><i class="fas fa-exchange-alt"></i> <span id="modalCessTitle">Nova Cessão</span></h3>
+        <input type="hidden" id="cessEditId">
+        <div class="form-group"><label>Nome</label><input id="cessNome" class="form-control"></div>
+        <div class="form-group"><label>Matrícula</label><input id="cessMatricula" class="form-control"></div>
+        <div class="form-group"><label>Cargo</label><input id="cessCargo" class="form-control"></div>
         <div class="form-group"><label>Tipo</label>
-            <select id="cessTipo"><option value="Cessão">Cessão</option><option value="Recepção">Recepção</option></select>
+            <select id="cessTipo" class="form-control"><option value="Cessão">Cessão</option><option value="Recepção">Recepção</option></select>
         </div>
-        <div class="form-group"><label>Órgão de Origem</label><input id="cessOrigem"></div>
-        <div class="form-group"><label>Órgão de Destino</label><input id="cessDestino"></div>
-        <div class="form-group"><label>Data Início</label><input id="cessInicio" type="date"></div>
-        <div class="form-group"><label>Data Prevista Término</label><input id="cessTermino" type="date"></div>
+        <div class="form-group"><label>Órgão Origem</label><input id="cessOrigem" class="form-control"></div>
+        <div class="form-group"><label>Órgão Destino</label><input id="cessDestino" class="form-control"></div>
+        <div class="form-group"><label>Início</label><input id="cessInicio" type="date" class="form-control"></div>
+        <div class="form-group"><label>Término</label><input id="cessTermino" type="date" class="form-control"></div>
         <div class="form-group"><label>Situação</label>
-            <select id="cessSituacao"><option value="Ativa">Ativa</option><option value="Encerrada">Encerrada</option><option value="Interrompida">Interrompida</option></select>
+            <select id="cessSituacao" class="form-control"><option value="Ativa">Ativa</option><option value="Encerrada">Encerrada</option><option value="Interrompida">Interrompida</option></select>
         </div>
         <div class="modal-actions">
             <button class="btn btn-outline" onclick="fecharModal('modalCessao')">Cancelar</button>
@@ -594,118 +249,153 @@
 </div>
 
 <script>
-    // ========== DADOS GLOBAIS ==========
+    // ===== DADOS =====
     let pssData = [];
     let licencasData = [];
     let cessoesData = [];
     let arquivoData = [];
-    let pssIdCounter = 1;
-    let licIdCounter = 1;
-    let cessIdCounter = 1;
+    let pssId = 1, licId = 1, cessId = 1;
 
-    // ========== INICIALIZAR DADOS EXEMPLO ==========
-    function initSampleData() {
+    // ===== INICIALIZAR =====
+    function init() {
         const hoje = new Date();
         const d = (dias) => { let dt = new Date(); dt.setDate(dt.getDate()+dias); return dt.toISOString().split('T')[0]; };
         pssData = [
-            { id: pssIdCounter++, nome: 'Ana Silva', matricula: '12345', cargo: 'Assistente Administrativo', admissao: d(-30), termino: d(45), exoneracao: '', situacao: 'Ativo', prorrogacoes: [], historico: [] },
-            { id: pssIdCounter++, nome: 'Carlos Souza', matricula: '67890', cargo: 'Técnico em Informática', admissao: d(-90), termino: d(20), exoneracao: '', situacao: 'Ativo', prorrogacoes: [], historico: [] },
-            { id: pssIdCounter++, nome: 'Mariana Lima', matricula: '11223', cargo: 'Analista de RH', admissao: d(-180), termino: d(-10), exoneracao: d(-5), situacao: 'Exonerado', prorrogacoes: [], historico: [] }
+            { id: pssId++, nome: 'Ana Silva', matricula: '12345', cargo: 'Assistente', admissao: d(-30), termino: d(45), situacao: 'Ativo', prorrogacoes: [] },
+            { id: pssId++, nome: 'Carlos Souza', matricula: '67890', cargo: 'Técnico', admissao: d(-90), termino: d(20), situacao: 'Ativo', prorrogacoes: [] },
+            { id: pssId++, nome: 'Mariana Lima', matricula: '11223', cargo: 'Analista', admissao: d(-180), termino: d(-10), situacao: 'Encerrado', prorrogacoes: [] }
         ];
         licencasData = [
-            { id: licIdCounter++, nome: 'João Pereira', matricula: '44556', cargo: 'Motorista', inicio: d(-60), termino: d(30), motivo: 'Saúde', situacao: 'Em andamento', interrupcao: null },
-            { id: licIdCounter++, nome: 'Fernanda Costa', matricula: '77889', cargo: 'Professora', inicio: d(-120), termino: d(-5), motivo: 'Estudo', situacao: 'Encerrada', interrupcao: null }
+            { id: licId++, nome: 'João Pereira', matricula: '44556', cargo: 'Motorista', inicio: d(-60), termino: d(30), motivo: 'Saúde', situacao: 'Em andamento' },
+            { id: licId++, nome: 'Fernanda Costa', matricula: '77889', cargo: 'Professora', inicio: d(-120), termino: d(-5), motivo: 'Estudo', situacao: 'Encerrada' }
         ];
         cessoesData = [
-            { id: cessIdCounter++, nome: 'Roberto Alves', matricula: '99001', cargo: 'Engenheiro', tipo: 'Cessão', origem: 'Secretaria Obras', destino: 'Secretaria Transporte', inicio: d(-45), termino: d(60), situacao: 'Ativa' },
-            { id: cessIdCounter++, nome: 'Patrícia Rocha', matricula: '22334', cargo: 'Enfermeira', tipo: 'Recepção', origem: 'Hospital Central', destino: 'UBS Bairro', inicio: d(-20), termino: d(40), situacao: 'Ativa' }
+            { id: cessId++, nome: 'Roberto Alves', matricula: '99001', cargo: 'Engenheiro', tipo: 'Cessão', origem: 'Obras', destino: 'Transporte', inicio: d(-45), termino: d(60), situacao: 'Ativa' },
+            { id: cessId++, nome: 'Patrícia Rocha', matricula: '22334', cargo: 'Enfermeira', tipo: 'Recepção', origem: 'Hospital', destino: 'UBS', inicio: d(-20), termino: d(40), situacao: 'Ativa' }
         ];
-        arquivoData = [
-            { nome: 'Mariana Lima', matricula: '11223', tipo: 'PSS', dataTermino: d(-10), motivo: 'Exoneração', detalhes: 'Contrato encerrado' }
-        ];
+        arquivoData = [];
         renderAll();
     }
 
-    // ========== RENDERIZAÇÃO ==========
-    function renderAll() {
-        renderDashboard();
-        renderPSS();
-        renderLicencas();
-        renderCessoes();
-        renderArquivo();
-        renderAlertas();
-    }
+    // ===== RENDER =====
+    function renderAll() { renderDashboard(); renderPSS(); renderLicencas(); renderCessoes(); renderArquivo(); renderAlertas(); }
 
-    // ========== DASHBOARD ==========
+    // ===== DASHBOARD =====
     function renderDashboard() {
-        const ativosPSS = pssData.filter(p => p.situacao === 'Ativo' || p.situacao === 'Prorrogado').length;
+        const ativos = pssData.filter(p => p.situacao === 'Ativo' || p.situacao === 'Prorrogado').length;
         const prorrogados = pssData.filter(p => p.situacao === 'Prorrogado').length;
-        const encerradosPSS = pssData.filter(p => p.situacao === 'Encerrado' || p.situacao === 'Exonerado').length;
+        const encerrados = pssData.filter(p => p.situacao === 'Encerrado' || p.situacao === 'Exonerado').length;
         const licAndamento = licencasData.filter(l => l.situacao === 'Em andamento').length;
         const cessAtivas = cessoesData.filter(c => c.situacao === 'Ativa' && c.tipo === 'Cessão').length;
         const recepAtivas = cessoesData.filter(c => c.situacao === 'Ativa' && c.tipo === 'Recepção').length;
-
-        const hoje = new Date();
-        const mesAtual = hoje.getMonth();
-        const anoAtual = hoje.getFullYear();
-        const venceMes = (registros, campo) => {
-            return registros.filter(r => {
-                if (!r[campo]) return false;
-                const d = new Date(r[campo]);
-                return d.getMonth() === mesAtual && d.getFullYear() === anoAtual;
-            }).length;
-        };
-        const venceProxMes = (registros, campo) => {
-            const prox = new Date(hoje.getFullYear(), hoje.getMonth()+1, 1);
-            return registros.filter(r => {
-                if (!r[campo]) return false;
-                const d = new Date(r[campo]);
-                return d.getMonth() === prox.getMonth() && d.getFullYear() === prox.getFullYear();
-            }).length;
-        };
-        const vencidosPendentes = pssData.filter(p => {
-            if (!p.termino) return false;
-            return new Date(p.termino) < hoje && (p.situacao === 'Ativo' || p.situacao === 'Prorrogado');
-        }).length + licencasData.filter(l => {
-            if (!l.termino) return false;
-            return new Date(l.termino) < hoje && l.situacao === 'Em andamento';
-        }).length + cessoesData.filter(c => {
-            if (!c.termino) return false;
-            return new Date(c.termino) < hoje && c.situacao === 'Ativa';
-        }).length;
-
         document.getElementById('dashboardCards').innerHTML = `
-            <div class="stat-card"><div class="label">PSS Ativos</div><div class="value">${ativosPSS}</div></div>
+            <div class="stat-card"><div class="label">PSS Ativos</div><div class="value">${ativos}</div></div>
             <div class="stat-card"><div class="label">PSS Prorrogados</div><div class="value">${prorrogados}</div></div>
-            <div class="stat-card"><div class="label">PSS Encerrados</div><div class="value">${encerradosPSS}</div></div>
+            <div class="stat-card"><div class="label">PSS Encerrados</div><div class="value">${encerrados}</div></div>
             <div class="stat-card"><div class="label">Licenças em Andamento</div><div class="value">${licAndamento}</div></div>
             <div class="stat-card"><div class="label">Cessões Ativas</div><div class="value">${cessAtivas}</div></div>
             <div class="stat-card"><div class="label">Recepções Ativas</div><div class="value">${recepAtivas}</div></div>
-            <div class="stat-card"><div class="label">Vencem neste mês</div><div class="value">${venceMes([...pssData, ...licencasData, ...cessoesData], 'termino')}</div></div>
-            <div class="stat-card"><div class="label">Vencem próximo mês</div><div class="value">${venceProxMes([...pssData, ...licencasData, ...cessoesData], 'termino')}</div></div>
-            <div class="stat-card" style="border-left-color:#e53e3e;"><div class="label">Vencidos pendentes</div><div class="value" style="color:#e53e3e;">${vencidosPendentes}</div></div>
         `;
-        // proximos vencimentos
-        const proximos = [...pssData, ...licencasData, ...cessoesData]
-            .filter(r => r.termino && new Date(r.termino) >= hoje)
-            .sort((a,b) => new Date(a.termino) - new Date(b.termino))
-            .slice(0,6);
-        const container = document.getElementById('dashboardProximosVencimentos');
-        container.innerHTML = proximos.map(r => `<span class="badge badge-blue">${r.nome} - ${r.termino}</span>`).join('') || '<span style="color:#718096;">Nenhum vencimento próximo</span>';
+        const hoje = new Date();
+        const prox = [...pssData, ...licencasData, ...cessoesData].filter(r => r.termino && new Date(r.termino) >= hoje).sort((a,b) => new Date(a.termino) - new Date(b.termino)).slice(0,6);
+        document.getElementById('dashboardProximosVencimentos').innerHTML = prox.map(r => `<span class="badge badge-blue">${r.nome} - ${r.termino}</span>`).join('') || 'Nenhum vencimento próximo';
     }
 
-    // ========== PSS ==========
+    // ===== PSS =====
     function renderPSS() {
         const search = document.getElementById('pssSearch').value.toLowerCase();
-        const situacao = document.getElementById('pssFilterSituacao').value;
-        let filtered = pssData.filter(p => {
-            const match = p.nome.toLowerCase().includes(search) || p.matricula.includes(search) || p.cargo.toLowerCase().includes(search);
-            return match && (situacao === '' || p.situacao === situacao);
-        });
-        const tbody = document.getElementById('pssTableBody');
-        tbody.innerHTML = filtered.map(p => `
+        const filtro = document.getElementById('pssFilterSituacao').value;
+        const filtered = pssData.filter(p => (p.nome.toLowerCase().includes(search) || p.matricula.includes(search) || p.cargo.toLowerCase().includes(search)) && (filtro === '' || p.situacao === filtro));
+        document.getElementById('pssTableBody').innerHTML = filtered.map(p => `
             <tr>
                 <td>${p.nome}</td><td>${p.matricula}</td><td>${p.cargo}</td>
                 <td>${p.admissao}</td><td>${p.termino || ''}</td>
-                <td>${p.exoneracao || ''}</td>
-                <td><span class="badge ${p.situacao === 'Ativo'?'badge-green':p.situacao==='Prorrogado'?'badge-yellow':p.situacao==='Encerrado'?'badge-gray
+                <td><span class="badge ${p.situacao==='Ativo'?'badge-green':p.situacao==='Prorrogado'?'badge-yellow':'badge-gray'}">${p.situacao}</span></td>
+                <td>${p.prorrogacoes ? p.prorrogacoes.length : 0}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" onclick="editarPSS(${p.id})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-success btn-sm" onclick="prorrogarPSS(${p.id})"><i class="fas fa-clock"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="excluirPSS(${p.id})"><i class="fas fa-trash"></i></button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function abrirModalPSS() {
+        document.getElementById('modalPssTitle').textContent = 'Novo PSS';
+        document.getElementById('pssEditId').value = '';
+        ['pssNome','pssMatricula','pssCargo','pssAdmissao','pssTermino'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('pssSituacao').value = 'Ativo';
+        document.getElementById('modalPSS').classList.add('open');
+    }
+
+    function editarPSS(id) {
+        const p = pssData.find(x => x.id === id);
+        if (!p) return;
+        document.getElementById('modalPssTitle').textContent = 'Editar PSS';
+        document.getElementById('pssEditId').value = id;
+        document.getElementById('pssNome').value = p.nome;
+        document.getElementById('pssMatricula').value = p.matricula;
+        document.getElementById('pssCargo').value = p.cargo;
+        document.getElementById('pssAdmissao').value = p.admissao;
+        document.getElementById('pssTermino').value = p.termino;
+        document.getElementById('pssSituacao').value = p.situacao;
+        document.getElementById('modalPSS').classList.add('open');
+    }
+
+    function salvarPSS() {
+        const id = document.getElementById('pssEditId').value;
+        const data = {
+            nome: document.getElementById('pssNome').value,
+            matricula: document.getElementById('pssMatricula').value,
+            cargo: document.getElementById('pssCargo').value,
+            admissao: document.getElementById('pssAdmissao').value,
+            termino: document.getElementById('pssTermino').value,
+            situacao: document.getElementById('pssSituacao').value,
+            prorrogacoes: []
+        };
+        if (id) {
+            const p = pssData.find(x => x.id === parseInt(id));
+            if (p) { Object.assign(p, data); p.prorrogacoes = p.prorrogacoes || []; }
+        } else {
+            data.id = pssId++;
+            data.prorrogacoes = [];
+            pssData.push(data);
+        }
+        fecharModal('modalPSS');
+        renderAll();
+    }
+
+    function prorrogarPSS(id) {
+        const p = pssData.find(x => x.id === id);
+        if (!p) return;
+        const novaData = prompt('Nova data de término (YYYY-MM-DD):', p.termino);
+        if (novaData) {
+            p.prorrogacoes = p.prorrogacoes || [];
+            p.prorrogacoes.push({ data: new Date().toISOString().split('T')[0], novoTermino: novaData });
+            p.termino = novaData;
+            p.situacao = 'Prorrogado';
+            renderAll();
+        }
+    }
+
+    function excluirPSS(id) {
+        if (confirm('Deseja arquivar este PSS?')) {
+            const p = pssData.find(x => x.id === id);
+            if (p) {
+                arquivoData.push({ nome: p.nome, matricula: p.matricula, tipo: 'PSS', dataTermino: p.termino, motivo: 'Arquivado' });
+                pssData = pssData.filter(x => x.id !== id);
+                renderAll();
+            }
+        }
+    }
+
+    // ===== LICENÇAS =====
+    function renderLicencas() {
+        const search = document.getElementById('licSearch').value.toLowerCase();
+        const filtro = document.getElementById('licFilterSituacao').value;
+        const filtered = licencasData.filter(l => (l.nome.toLowerCase().includes(search) || l.matricula.includes(search)) && (filtro === '' || l.situacao === filtro));
+        document.getElementById('licencasTableBody').innerHTML = filtered.map(l => `
+            <tr>
+                <td>${l.nome}</td><td>${l.matricula}</td><td>${l.cargo}</td>
+                <td>${l.inicio}</td><td>${l.termino}</td><td>${l.motivo || ''
