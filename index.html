@@ -3,31 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RH Prefeitura - Controle de Contratos</title>
+    <title>RH Prefeitura - Sistema Funcional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background: #f0f4f8; padding: 20px; }
-        .app-container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 25px; }
-        h1 { font-size: 28px; font-weight: 700; color: #2d3748; border-bottom: 3px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }
+        .app-container { max-width: 1400px; margin: 0 auto; background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        h1 { font-size: 28px; color: #2d3748; border-bottom: 3px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 25px; display: flex; align-items: center; gap: 12px; }
         h1 i { color: #2b6cb0; }
         .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 30px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
         .tab-btn { padding: 10px 20px; background: transparent; border: none; border-radius: 30px; font-weight: 600; color: #4a5568; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px; font-size: 14px; }
         .tab-btn:hover { background: #edf2f7; }
-        .tab-btn.active { background: #2b6cb0; color: white; box-shadow: 0 4px 10px rgba(43, 108, 176, 0.3); }
+        .tab-btn.active { background: #2b6cb0; color: white; }
         .tab-content { display: none; animation: fadeIn 0.3s ease; }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: #f7fafc; border-radius: 16px; padding: 20px; border-left: 6px solid #2b6cb0; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
-        .stat-card .label { font-size: 13px; color: #718096; font-weight: 500; }
+        .stat-card { background: #f7fafc; border-radius: 16px; padding: 20px; border-left: 6px solid #2b6cb0; }
+        .stat-card .label { font-size: 13px; color: #718096; }
         .stat-card .value { font-size: 28px; font-weight: 700; color: #1a202c; margin-top: 6px; }
         .filters-bar { display: flex; flex-wrap: wrap; gap: 15px; align-items: center; background: #f7fafc; padding: 15px 20px; border-radius: 16px; margin-bottom: 25px; }
-        .filters-bar input, .filters-bar select { padding: 8px 14px; border: 1px solid #e2e8f0; border-radius: 30px; background: white; font-size: 14px; outline: none; }
-        .filters-bar input:focus, .filters-bar select:focus { border-color: #2b6cb0; box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.15); }
+        .filters-bar input, .filters-bar select { padding: 8px 14px; border: 1px solid #e2e8f0; border-radius: 30px; background: white; font-size: 14px; }
         .btn { padding: 8px 18px; border: none; border-radius: 30px; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
         .btn-primary { background: #2b6cb0; color: white; }
-        .btn-primary:hover { background: #1a4f7a; transform: translateY(-2px); box-shadow: 0 6px 14px rgba(43, 108, 176, 0.25); }
+        .btn-primary:hover { background: #1a4f7a; }
         .btn-success { background: #38a169; color: white; }
         .btn-success:hover { background: #2f855a; }
         .btn-danger { background: #e53e3e; color: white; }
@@ -36,11 +35,11 @@
         .btn-warning:hover { background: #b7791f; }
         .btn-outline { background: transparent; border: 1px solid #cbd5e0; color: #4a5568; }
         .btn-outline:hover { background: #edf2f7; }
-        .btn-sm { padding: 4px 12px; font-size: 12px; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; }
         .table-wrapper { overflow-x: auto; border-radius: 16px; border: 1px solid #e2e8f0; background: white; margin-top: 15px; }
         table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th { background: #f7fafc; color: #2d3748; font-weight: 600; padding: 14px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
-        td { padding: 12px; border-bottom: 1px solid #edf2f7; vertical-align: middle; }
+        th { background: #f7fafc; padding: 14px 12px; text-align: left; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 12px; border-bottom: 1px solid #edf2f7; }
         tr:hover td { background: #f7fafc; }
         .badge { display: inline-block; padding: 4px 12px; border-radius: 30px; font-size: 12px; font-weight: 600; }
         .badge-green { background: #c6f6d5; color: #22543d; }
@@ -48,66 +47,65 @@
         .badge-red { background: #fed7d7; color: #9b2c2c; }
         .badge-blue { background: #bee3f8; color: #2a4365; }
         .badge-gray { background: #e2e8f0; color: #2d3748; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(3px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(3px); justify-content: center; align-items: center; z-index: 1000; }
         .modal.open { display: flex; }
-        .modal-content { background: white; border-radius: 24px; padding: 30px; max-width: 550px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.15); animation: slideUp 0.25s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .modal-content h3 { font-size: 20px; margin-bottom: 20px; color: #1a202c; display: flex; align-items: center; gap: 10px; }
+        .modal-content { background: white; border-radius: 24px; padding: 30px; max-width: 550px; width: 90%; max-height: 90vh; overflow-y: auto; }
+        .modal-content h3 { font-size: 20px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; font-weight: 600; font-size: 13px; color: #4a5568; margin-bottom: 5px; }
         .form-group input, .form-group select { width: 100%; padding: 10px 14px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 14px; }
-        .form-group input:focus, .form-group select:focus { border-color: #2b6cb0; box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1); }
+        .form-group input:focus, .form-group select:focus { border-color: #2b6cb0; }
         .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
         .search-box { display: flex; gap: 10px; flex-wrap: wrap; }
         .search-box input { flex: 1; min-width: 200px; padding: 10px 16px; border: 1px solid #e2e8f0; border-radius: 30px; font-size: 14px; }
         .alert-panel { background: #ebf8ff; border-radius: 16px; padding: 20px; border-left: 6px solid #2b6cb0; margin-bottom: 25px; }
         .alert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 12px; }
-        .alert-item { background: white; border-radius: 12px; padding: 12px 16px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .alert-item { background: white; border-radius: 12px; padding: 12px 16px; }
         .alert-item .count { font-size: 22px; font-weight: 700; }
-        .historico-list { background: #f7fafc; border-radius: 12px; padding: 12px 16px; margin-top: 8px; font-size: 13px; max-height: 120px; overflow-y: auto; }
-        .historico-list p { padding: 4px 0; border-bottom: 1px dashed #e2e8f0; }
-        @media (max-width: 700px) { .tabs .tab-btn { font-size: 12px; padding: 6px 14px; } .card-grid { grid-template-columns: 1fr 1fr; } }
+        .vazio { color: #718096; text-align: center; padding: 30px; }
+        @media (max-width: 700px) { .tabs .tab-btn { font-size: 12px; padding: 6px 14px; } }
     </style>
 </head>
 <body>
-<div class="app-container" id="app">
-    <h1><i class="fas fa-briefcase"></i> Controle de Contratos e Afastamentos</h1>
+<div class="app-container">
+    <h1><i class="fas fa-briefcase"></i> RH Prefeitura - Controle de Contratos</h1>
+    
+    <!-- TABS -->
     <div class="tabs">
-        <button class="tab-btn active" data-tab="tab-dashboard"><i class="fas fa-chart-pie"></i> Dashboard</button>
-        <button class="tab-btn" data-tab="tab-pss"><i class="fas fa-user-clock"></i> PSS</button>
-        <button class="tab-btn" data-tab="tab-licencas"><i class="fas fa-calendar-alt"></i> Licenças</button>
-        <button class="tab-btn" data-tab="tab-cessoes"><i class="fas fa-exchange-alt"></i> Cessões/Recepções</button>
-        <button class="tab-btn" data-tab="tab-arquivo"><i class="fas fa-archive"></i> Histórico</button>
-        <button class="tab-btn" data-tab="tab-alertas"><i class="fas fa-bell"></i> Alertas</button>
+        <button class="tab-btn active" onclick="trocarTab('dashboard')"><i class="fas fa-chart-pie"></i> Dashboard</button>
+        <button class="tab-btn" onclick="trocarTab('pss')"><i class="fas fa-user-clock"></i> PSS</button>
+        <button class="tab-btn" onclick="trocarTab('licencas')"><i class="fas fa-calendar-alt"></i> Licenças</button>
+        <button class="tab-btn" onclick="trocarTab('cessoes')"><i class="fas fa-exchange-alt"></i> Cessões</button>
+        <button class="tab-btn" onclick="trocarTab('arquivo')"><i class="fas fa-archive"></i> Histórico</button>
+        <button class="tab-btn" onclick="trocarTab('alertas')"><i class="fas fa-bell"></i> Alertas</button>
     </div>
 
     <!-- DASHBOARD -->
     <div id="tab-dashboard" class="tab-content active">
         <div class="card-grid" id="dashboardCards"></div>
-        <div style="margin-top:20px; background:#f7fafc; border-radius:16px; padding:20px;">
-            <h4><i class="fas fa-clock"></i> Registros que vencem em breve</h4>
-            <div id="dashboardProximosVencimentos" style="display:flex; flex-wrap:wrap; gap:12px; margin-top:10px;"></div>
+        <div style="background:#f7fafc; border-radius:16px; padding:20px; margin-top:20px;">
+            <h4><i class="fas fa-clock"></i> Próximos vencimentos</h4>
+            <div id="dashboardProximos" style="display:flex; flex-wrap:wrap; gap:12px; margin-top:10px;"></div>
         </div>
     </div>
 
     <!-- PSS -->
     <div id="tab-pss" class="tab-content">
         <div class="filters-bar">
-            <div class="search-box">
-                <input type="text" id="pssSearch" placeholder="Buscar..." oninput="renderPSS()">
-                <select id="pssFilterSituacao" onchange="renderPSS()">
-                    <option value="">Todas</option>
-                    <option value="Ativo">Ativo</option>
-                    <option value="Prorrogado">Prorrogado</option>
-                    <option value="Encerrado">Encerrado</option>
-                    <option value="Exonerado">Exonerado</option>
-                </select>
-                <button class="btn btn-primary" onclick="abrirModalPSS()"><i class="fas fa-plus"></i> Novo PSS</button>
-            </div>
+            <input type="text" id="pssBusca" placeholder="Buscar..." oninput="renderPSS()">
+            <select id="pssFiltro" onchange="renderPSS()">
+                <option value="">Todas</option>
+                <option value="Ativo">Ativo</option>
+                <option value="Prorrogado">Prorrogado</option>
+                <option value="Encerrado">Encerrado</option>
+                <option value="Exonerado">Exonerado</option>
+            </select>
+            <button class="btn btn-primary" onclick="abrirModalPSS()"><i class="fas fa-plus"></i> Novo PSS</button>
         </div>
         <div class="table-wrapper">
-            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Admissão</th><th>Término</th><th>Situação</th><th>Prorrogações</th><th>Ações</th></tr></thead>
-                <tbody id="pssTableBody"></tbody>
+            <table>
+                <thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Admissão</th><th>Término</th><th>Situação</th><th>Ações</th></tr></thead>
+                <tbody id="pssTbody"></tbody>
             </table>
         </div>
     </div>
@@ -115,20 +113,19 @@
     <!-- LICENÇAS -->
     <div id="tab-licencas" class="tab-content">
         <div class="filters-bar">
-            <div class="search-box">
-                <input type="text" id="licSearch" placeholder="Buscar..." oninput="renderLicencas()">
-                <select id="licFilterSituacao" onchange="renderLicencas()">
-                    <option value="">Todas</option>
-                    <option value="Em andamento">Em andamento</option>
-                    <option value="Encerrada">Encerrada</option>
-                    <option value="Interrompida">Interrompida</option>
-                </select>
-                <button class="btn btn-primary" onclick="abrirModalLicenca()"><i class="fas fa-plus"></i> Nova Licença</button>
-            </div>
+            <input type="text" id="licBusca" placeholder="Buscar..." oninput="renderLicencas()">
+            <select id="licFiltro" onchange="renderLicencas()">
+                <option value="">Todas</option>
+                <option value="Em andamento">Em andamento</option>
+                <option value="Encerrada">Encerrada</option>
+                <option value="Interrompida">Interrompida</option>
+            </select>
+            <button class="btn btn-primary" onclick="abrirModalLicenca()"><i class="fas fa-plus"></i> Nova Licença</button>
         </div>
         <div class="table-wrapper">
-            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Início</th><th>Término</th><th>Motivo</th><th>Situação</th><th>Ações</th></tr></thead>
-                <tbody id="licencasTableBody"></tbody>
+            <table>
+                <thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Início</th><th>Término</th><th>Motivo</th><th>Situação</th><th>Ações</th></tr></thead>
+                <tbody id="licTbody"></tbody>
             </table>
         </div>
     </div>
@@ -136,25 +133,24 @@
     <!-- CESSÕES -->
     <div id="tab-cessoes" class="tab-content">
         <div class="filters-bar">
-            <div class="search-box">
-                <input type="text" id="cessSearch" placeholder="Buscar..." oninput="renderCessoes()">
-                <select id="cessFilterTipo" onchange="renderCessoes()">
-                    <option value="">Todos</option>
-                    <option value="Cessão">Cessão</option>
-                    <option value="Recepção">Recepção</option>
-                </select>
-                <select id="cessFilterSituacao" onchange="renderCessoes()">
-                    <option value="">Todas</option>
-                    <option value="Ativa">Ativa</option>
-                    <option value="Encerrada">Encerrada</option>
-                    <option value="Interrompida">Interrompida</option>
-                </select>
-                <button class="btn btn-primary" onclick="abrirModalCessao()"><i class="fas fa-plus"></i> Nova Cessão</button>
-            </div>
+            <input type="text" id="cessBusca" placeholder="Buscar..." oninput="renderCessoes()">
+            <select id="cessFiltroTipo" onchange="renderCessoes()">
+                <option value="">Todos</option>
+                <option value="Cessão">Cessão</option>
+                <option value="Recepção">Recepção</option>
+            </select>
+            <select id="cessFiltroSituacao" onchange="renderCessoes()">
+                <option value="">Todas</option>
+                <option value="Ativa">Ativa</option>
+                <option value="Encerrada">Encerrada</option>
+                <option value="Interrompida">Interrompida</option>
+            </select>
+            <button class="btn btn-primary" onclick="abrirModalCessao()"><i class="fas fa-plus"></i> Nova Cessão</button>
         </div>
         <div class="table-wrapper">
-            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Tipo</th><th>Origem</th><th>Destino</th><th>Início</th><th>Término</th><th>Situação</th><th>Ações</th></tr></thead>
-                <tbody id="cessoesTableBody"></tbody>
+            <table>
+                <thead><tr><th>Nome</th><th>Matrícula</th><th>Cargo</th><th>Tipo</th><th>Origem</th><th>Destino</th><th>Início</th><th>Término</th><th>Situação</th><th>Ações</th></tr></thead>
+                <tbody id="cessTbody"></tbody>
             </table>
         </div>
     </div>
@@ -162,12 +158,13 @@
     <!-- ARQUIVO -->
     <div id="tab-arquivo" class="tab-content">
         <div class="filters-bar">
-            <input type="text" id="arquivoSearch" placeholder="Buscar no arquivo..." oninput="renderArquivo()" style="flex:1; padding:10px 16px; border-radius:30px; border:1px solid #e2e8f0;">
-            <button class="btn btn-outline" onclick="exportarRelatorio()"><i class="fas fa-file-export"></i> Exportar</button>
+            <input type="text" id="arqBusca" placeholder="Buscar no arquivo..." oninput="renderArquivo()" style="flex:1;">
+            <button class="btn btn-outline" onclick="exportarCSV()"><i class="fas fa-file-export"></i> Exportar</button>
         </div>
         <div class="table-wrapper">
-            <table><thead><tr><th>Nome</th><th>Matrícula</th><th>Tipo</th><th>Data término</th><th>Motivo</th></tr></thead>
-                <tbody id="arquivoTableBody"></tbody>
+            <table>
+                <thead><tr><th>Nome</th><th>Matrícula</th><th>Tipo</th><th>Data término</th><th>Motivo</th></tr></thead>
+                <tbody id="arqTbody"></tbody>
             </table>
         </div>
     </div>
@@ -185,15 +182,15 @@
 <!-- MODAL PSS -->
 <div class="modal" id="modalPSS">
     <div class="modal-content">
-        <h3><i class="fas fa-user-plus"></i> <span id="modalPssTitle">Novo PSS</span></h3>
-        <input type="hidden" id="pssEditId">
-        <div class="form-group"><label>Nome</label><input id="pssNome" class="form-control"></div>
-        <div class="form-group"><label>Matrícula</label><input id="pssMatricula" class="form-control"></div>
-        <div class="form-group"><label>Cargo</label><input id="pssCargo" class="form-control"></div>
-        <div class="form-group"><label>Admissão</label><input id="pssAdmissao" type="date" class="form-control"></div>
-        <div class="form-group"><label>Término</label><input id="pssTermino" type="date" class="form-control"></div>
+        <h3><i class="fas fa-user-plus"></i> <span id="pssTitulo">Novo PSS</span></h3>
+        <input type="hidden" id="pssId">
+        <div class="form-group"><label>Nome</label><input id="pssNome"></div>
+        <div class="form-group"><label>Matrícula</label><input id="pssMatricula"></div>
+        <div class="form-group"><label>Cargo</label><input id="pssCargo"></div>
+        <div class="form-group"><label>Admissão</label><input id="pssAdmissao" type="date"></div>
+        <div class="form-group"><label>Término</label><input id="pssTermino" type="date"></div>
         <div class="form-group"><label>Situação</label>
-            <select id="pssSituacao" class="form-control"><option value="Ativo">Ativo</option><option value="Prorrogado">Prorrogado</option><option value="Encerrado">Encerrado</option><option value="Exonerado">Exonerado</option></select>
+            <select id="pssSituacao"><option value="Ativo">Ativo</option><option value="Prorrogado">Prorrogado</option><option value="Encerrado">Encerrado</option><option value="Exonerado">Exonerado</option></select>
         </div>
         <div class="modal-actions">
             <button class="btn btn-outline" onclick="fecharModal('modalPSS')">Cancelar</button>
@@ -205,16 +202,16 @@
 <!-- MODAL LICENÇA -->
 <div class="modal" id="modalLicenca">
     <div class="modal-content">
-        <h3><i class="fas fa-calendar-minus"></i> <span id="modalLicTitle">Nova Licença</span></h3>
-        <input type="hidden" id="licEditId">
-        <div class="form-group"><label>Nome</label><input id="licNome" class="form-control"></div>
-        <div class="form-group"><label>Matrícula</label><input id="licMatricula" class="form-control"></div>
-        <div class="form-group"><label>Cargo</label><input id="licCargo" class="form-control"></div>
-        <div class="form-group"><label>Início</label><input id="licInicio" type="date" class="form-control"></div>
-        <div class="form-group"><label>Término</label><input id="licTermino" type="date" class="form-control"></div>
-        <div class="form-group"><label>Motivo</label><input id="licMotivo" class="form-control"></div>
+        <h3><i class="fas fa-calendar-minus"></i> <span id="licTitulo">Nova Licença</span></h3>
+        <input type="hidden" id="licId">
+        <div class="form-group"><label>Nome</label><input id="licNome"></div>
+        <div class="form-group"><label>Matrícula</label><input id="licMatricula"></div>
+        <div class="form-group"><label>Cargo</label><input id="licCargo"></div>
+        <div class="form-group"><label>Início</label><input id="licInicio" type="date"></div>
+        <div class="form-group"><label>Término</label><input id="licTermino" type="date"></div>
+        <div class="form-group"><label>Motivo</label><input id="licMotivo"></div>
         <div class="form-group"><label>Situação</label>
-            <select id="licSituacao" class="form-control"><option value="Em andamento">Em andamento</option><option value="Encerrada">Encerrada</option><option value="Interrompida">Interrompida</option></select>
+            <select id="licSituacao"><option value="Em andamento">Em andamento</option><option value="Encerrada">Encerrada</option><option value="Interrompida">Interrompida</option></select>
         </div>
         <div class="modal-actions">
             <button class="btn btn-outline" onclick="fecharModal('modalLicenca')">Cancelar</button>
@@ -226,20 +223,20 @@
 <!-- MODAL CESSÃO -->
 <div class="modal" id="modalCessao">
     <div class="modal-content">
-        <h3><i class="fas fa-exchange-alt"></i> <span id="modalCessTitle">Nova Cessão</span></h3>
-        <input type="hidden" id="cessEditId">
-        <div class="form-group"><label>Nome</label><input id="cessNome" class="form-control"></div>
-        <div class="form-group"><label>Matrícula</label><input id="cessMatricula" class="form-control"></div>
-        <div class="form-group"><label>Cargo</label><input id="cessCargo" class="form-control"></div>
+        <h3><i class="fas fa-exchange-alt"></i> <span id="cessTitulo">Nova Cessão</span></h3>
+        <input type="hidden" id="cessId">
+        <div class="form-group"><label>Nome</label><input id="cessNome"></div>
+        <div class="form-group"><label>Matrícula</label><input id="cessMatricula"></div>
+        <div class="form-group"><label>Cargo</label><input id="cessCargo"></div>
         <div class="form-group"><label>Tipo</label>
-            <select id="cessTipo" class="form-control"><option value="Cessão">Cessão</option><option value="Recepção">Recepção</option></select>
+            <select id="cessTipo"><option value="Cessão">Cessão</option><option value="Recepção">Recepção</option></select>
         </div>
-        <div class="form-group"><label>Órgão Origem</label><input id="cessOrigem" class="form-control"></div>
-        <div class="form-group"><label>Órgão Destino</label><input id="cessDestino" class="form-control"></div>
-        <div class="form-group"><label>Início</label><input id="cessInicio" type="date" class="form-control"></div>
-        <div class="form-group"><label>Término</label><input id="cessTermino" type="date" class="form-control"></div>
+        <div class="form-group"><label>Órgão Origem</label><input id="cessOrigem"></div>
+        <div class="form-group"><label>Órgão Destino</label><input id="cessDestino"></div>
+        <div class="form-group"><label>Início</label><input id="cessInicio" type="date"></div>
+        <div class="form-group"><label>Término</label><input id="cessTermino" type="date"></div>
         <div class="form-group"><label>Situação</label>
-            <select id="cessSituacao" class="form-control"><option value="Ativa">Ativa</option><option value="Encerrada">Encerrada</option><option value="Interrompida">Interrompida</option></select>
+            <select id="cessSituacao"><option value="Ativa">Ativa</option><option value="Encerrada">Encerrada</option><option value="Interrompida">Interrompida</option></select>
         </div>
         <div class="modal-actions">
             <button class="btn btn-outline" onclick="fecharModal('modalCessao')">Cancelar</button>
@@ -249,153 +246,533 @@
 </div>
 
 <script>
-    // ===== DADOS =====
-    let pssData = [];
-    let licencasData = [];
-    let cessoesData = [];
-    let arquivoData = [];
-    let pssId = 1, licId = 1, cessId = 1;
+// ============================================
+// DADOS
+// ============================================
+let pssData = [];
+let licencasData = [];
+let cessoesData = [];
+let arquivoData = [];
+let pssId = 1, licId = 1, cessId = 1;
 
-    // ===== INICIALIZAR =====
-    function init() {
-        const hoje = new Date();
-        const d = (dias) => { let dt = new Date(); dt.setDate(dt.getDate()+dias); return dt.toISOString().split('T')[0]; };
-        pssData = [
-            { id: pssId++, nome: 'Ana Silva', matricula: '12345', cargo: 'Assistente', admissao: d(-30), termino: d(45), situacao: 'Ativo', prorrogacoes: [] },
-            { id: pssId++, nome: 'Carlos Souza', matricula: '67890', cargo: 'Técnico', admissao: d(-90), termino: d(20), situacao: 'Ativo', prorrogacoes: [] },
-            { id: pssId++, nome: 'Mariana Lima', matricula: '11223', cargo: 'Analista', admissao: d(-180), termino: d(-10), situacao: 'Encerrado', prorrogacoes: [] }
-        ];
-        licencasData = [
-            { id: licId++, nome: 'João Pereira', matricula: '44556', cargo: 'Motorista', inicio: d(-60), termino: d(30), motivo: 'Saúde', situacao: 'Em andamento' },
-            { id: licId++, nome: 'Fernanda Costa', matricula: '77889', cargo: 'Professora', inicio: d(-120), termino: d(-5), motivo: 'Estudo', situacao: 'Encerrada' }
-        ];
-        cessoesData = [
-            { id: cessId++, nome: 'Roberto Alves', matricula: '99001', cargo: 'Engenheiro', tipo: 'Cessão', origem: 'Obras', destino: 'Transporte', inicio: d(-45), termino: d(60), situacao: 'Ativa' },
-            { id: cessId++, nome: 'Patrícia Rocha', matricula: '22334', cargo: 'Enfermeira', tipo: 'Recepção', origem: 'Hospital', destino: 'UBS', inicio: d(-20), termino: d(40), situacao: 'Ativa' }
-        ];
-        arquivoData = [];
-        renderAll();
+// ============================================
+// INICIALIZAÇÃO COM DADOS EXEMPLO
+// ============================================
+function init() {
+    const hoje = new Date();
+    const d = (dias) => { let dt = new Date(); dt.setDate(dt.getDate() + dias); return dt.toISOString().split('T')[0]; };
+    
+    pssData = [
+        { id: pssId++, nome: 'Ana Silva', matricula: '12345', cargo: 'Assistente', admissao: d(-30), termino: d(45), situacao: 'Ativo' },
+        { id: pssId++, nome: 'Carlos Souza', matricula: '67890', cargo: 'Técnico', admissao: d(-90), termino: d(20), situacao: 'Ativo' },
+        { id: pssId++, nome: 'Mariana Lima', matricula: '11223', cargo: 'Analista', admissao: d(-180), termino: d(-10), situacao: 'Encerrado' }
+    ];
+    
+    licencasData = [
+        { id: licId++, nome: 'João Pereira', matricula: '44556', cargo: 'Motorista', inicio: d(-60), termino: d(30), motivo: 'Saúde', situacao: 'Em andamento' },
+        { id: licId++, nome: 'Fernanda Costa', matricula: '77889', cargo: 'Professora', inicio: d(-120), termino: d(-5), motivo: 'Estudo', situacao: 'Encerrada' }
+    ];
+    
+    cessoesData = [
+        { id: cessId++, nome: 'Roberto Alves', matricula: '99001', cargo: 'Engenheiro', tipo: 'Cessão', origem: 'Obras', destino: 'Transporte', inicio: d(-45), termino: d(60), situacao: 'Ativa' },
+        { id: cessId++, nome: 'Patrícia Rocha', matricula: '22334', cargo: 'Enfermeira', tipo: 'Recepção', origem: 'Hospital', destino: 'UBS', inicio: d(-20), termino: d(40), situacao: 'Ativa' }
+    ];
+    
+    arquivoData = [];
+    renderizarTudo();
+}
+
+// ============================================
+// ABAS
+// ============================================
+function trocarTab(nome) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + nome).classList.add('active');
+    document.querySelector(`.tab-btn[onclick="trocarTab('${nome}')"]`).classList.add('active');
+    renderizarTudo();
+}
+
+// ============================================
+// MODAIS
+// ============================================
+function abrirModal(id) { document.getElementById(id).classList.add('open'); }
+function fecharModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ============================================
+// RENDERIZAÇÃO GERAL
+// ============================================
+function renderizarTudo() {
+    renderDashboard();
+    renderPSS();
+    renderLicencas();
+    renderCessoes();
+    renderArquivo();
+    renderAlertas();
+}
+
+// ============================================
+// DASHBOARD
+// ============================================
+function renderDashboard() {
+    const ativos = pssData.filter(p => p.situacao === 'Ativo' || p.situacao === 'Prorrogado').length;
+    const prorrogados = pssData.filter(p => p.situacao === 'Prorrogado').length;
+    const encerrados = pssData.filter(p => p.situacao === 'Encerrado' || p.situacao === 'Exonerado').length;
+    const licAndamento = licencasData.filter(l => l.situacao === 'Em andamento').length;
+    const cessAtivas = cessoesData.filter(c => c.situacao === 'Ativa' && c.tipo === 'Cessão').length;
+    const recepAtivas = cessoesData.filter(c => c.situacao === 'Ativa' && c.tipo === 'Recepção').length;
+    
+    document.getElementById('dashboardCards').innerHTML = `
+        <div class="stat-card"><div class="label">PSS Ativos</div><div class="value">${ativos}</div></div>
+        <div class="stat-card"><div class="label">PSS Prorrogados</div><div class="value">${prorrogados}</div></div>
+        <div class="stat-card"><div class="label">PSS Encerrados</div><div class="value">${encerrados}</div></div>
+        <div class="stat-card"><div class="label">Licenças em Andamento</div><div class="value">${licAndamento}</div></div>
+        <div class="stat-card"><div class="label">Cessões Ativas</div><div class="value">${cessAtivas}</div></div>
+        <div class="stat-card"><div class="label">Recepções Ativas</div><div class="value">${recepAtivas}</div></div>
+    `;
+    
+    const hoje = new Date();
+    const proximos = [...pssData, ...licencasData, ...cessoesData]
+        .filter(r => r.termino && new Date(r.termino) >= hoje)
+        .sort((a, b) => new Date(a.termino) - new Date(b.termino))
+        .slice(0, 6);
+    
+    document.getElementById('dashboardProximos').innerHTML = proximos.length 
+        ? proximos.map(r => `<span class="badge badge-blue">${r.nome} - ${r.termino}</span>`).join('')
+        : '<span style="color:#718096;">Nenhum vencimento próximo</span>';
+}
+
+// ============================================
+// PSS - FUNÇÕES COMPLETAS
+// ============================================
+function renderPSS() {
+    const busca = document.getElementById('pssBusca').value.toLowerCase();
+    const filtro = document.getElementById('pssFiltro').value;
+    const dados = pssData.filter(p => {
+        const match = p.nome.toLowerCase().includes(busca) || p.matricula.includes(busca) || p.cargo.toLowerCase().includes(busca);
+        return match && (filtro === '' || p.situacao === filtro);
+    });
+    
+    const tbody = document.getElementById('pssTbody');
+    if (!dados.length) {
+        tbody.innerHTML = '<tr><td colspan="7" class="vazio">Nenhum registro encontrado</td></tr>';
+        return;
     }
+    
+    tbody.innerHTML = dados.map(p => `
+        <tr>
+            <td>${p.nome}</td>
+            <td>${p.matricula}</td>
+            <td>${p.cargo}</td>
+            <td>${p.admissao}</td>
+            <td>${p.termino || '-'}</td>
+            <td><span class="badge ${p.situacao==='Ativo'?'badge-green':p.situacao==='Prorrogado'?'badge-yellow':p.situacao==='Encerrado'?'badge-gray':'badge-red'}">${p.situacao}</span></td>
+            <td>
+                <button class="btn btn-primary btn-sm" onclick="editarPSS(${p.id})"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-warning btn-sm" onclick="prorrogarPSS(${p.id})"><i class="fas fa-clock"></i></button>
+                <button class="btn btn-danger btn-sm" onclick="arquivarPSS(${p.id})"><i class="fas fa-archive"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
 
-    // ===== RENDER =====
-    function renderAll() { renderDashboard(); renderPSS(); renderLicencas(); renderCessoes(); renderArquivo(); renderAlertas(); }
+function abrirModalPSS() {
+    document.getElementById('pssTitulo').textContent = 'Novo PSS';
+    document.getElementById('pssId').value = '';
+    ['pssNome','pssMatricula','pssCargo','pssAdmissao','pssTermino'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('pssSituacao').value = 'Ativo';
+    abrirModal('modalPSS');
+}
 
-    // ===== DASHBOARD =====
-    function renderDashboard() {
-        const ativos = pssData.filter(p => p.situacao === 'Ativo' || p.situacao === 'Prorrogado').length;
-        const prorrogados = pssData.filter(p => p.situacao === 'Prorrogado').length;
-        const encerrados = pssData.filter(p => p.situacao === 'Encerrado' || p.situacao === 'Exonerado').length;
-        const licAndamento = licencasData.filter(l => l.situacao === 'Em andamento').length;
-        const cessAtivas = cessoesData.filter(c => c.situacao === 'Ativa' && c.tipo === 'Cessão').length;
-        const recepAtivas = cessoesData.filter(c => c.situacao === 'Ativa' && c.tipo === 'Recepção').length;
-        document.getElementById('dashboardCards').innerHTML = `
-            <div class="stat-card"><div class="label">PSS Ativos</div><div class="value">${ativos}</div></div>
-            <div class="stat-card"><div class="label">PSS Prorrogados</div><div class="value">${prorrogados}</div></div>
-            <div class="stat-card"><div class="label">PSS Encerrados</div><div class="value">${encerrados}</div></div>
-            <div class="stat-card"><div class="label">Licenças em Andamento</div><div class="value">${licAndamento}</div></div>
-            <div class="stat-card"><div class="label">Cessões Ativas</div><div class="value">${cessAtivas}</div></div>
-            <div class="stat-card"><div class="label">Recepções Ativas</div><div class="value">${recepAtivas}</div></div>
-        `;
-        const hoje = new Date();
-        const prox = [...pssData, ...licencasData, ...cessoesData].filter(r => r.termino && new Date(r.termino) >= hoje).sort((a,b) => new Date(a.termino) - new Date(b.termino)).slice(0,6);
-        document.getElementById('dashboardProximosVencimentos').innerHTML = prox.map(r => `<span class="badge badge-blue">${r.nome} - ${r.termino}</span>`).join('') || 'Nenhum vencimento próximo';
+function editarPSS(id) {
+    const p = pssData.find(x => x.id === id);
+    if (!p) return;
+    document.getElementById('pssTitulo').textContent = 'Editar PSS';
+    document.getElementById('pssId').value = id;
+    document.getElementById('pssNome').value = p.nome;
+    document.getElementById('pssMatricula').value = p.matricula;
+    document.getElementById('pssCargo').value = p.cargo;
+    document.getElementById('pssAdmissao').value = p.admissao;
+    document.getElementById('pssTermino').value = p.termino || '';
+    document.getElementById('pssSituacao').value = p.situacao;
+    abrirModal('modalPSS');
+}
+
+function salvarPSS() {
+    const id = document.getElementById('pssId').value;
+    const dados = {
+        nome: document.getElementById('pssNome').value,
+        matricula: document.getElementById('pssMatricula').value,
+        cargo: document.getElementById('pssCargo').value,
+        admissao: document.getElementById('pssAdmissao').value,
+        termino: document.getElementById('pssTermino').value,
+        situacao: document.getElementById('pssSituacao').value
+    };
+    
+    if (!dados.nome || !dados.matricula || !dados.cargo) {
+        alert('Preencha nome, matrícula e cargo!');
+        return;
     }
-
-    // ===== PSS =====
-    function renderPSS() {
-        const search = document.getElementById('pssSearch').value.toLowerCase();
-        const filtro = document.getElementById('pssFilterSituacao').value;
-        const filtered = pssData.filter(p => (p.nome.toLowerCase().includes(search) || p.matricula.includes(search) || p.cargo.toLowerCase().includes(search)) && (filtro === '' || p.situacao === filtro));
-        document.getElementById('pssTableBody').innerHTML = filtered.map(p => `
-            <tr>
-                <td>${p.nome}</td><td>${p.matricula}</td><td>${p.cargo}</td>
-                <td>${p.admissao}</td><td>${p.termino || ''}</td>
-                <td><span class="badge ${p.situacao==='Ativo'?'badge-green':p.situacao==='Prorrogado'?'badge-yellow':'badge-gray'}">${p.situacao}</span></td>
-                <td>${p.prorrogacoes ? p.prorrogacoes.length : 0}</td>
-                <td>
-                    <button class="btn btn-primary btn-sm" onclick="editarPSS(${p.id})"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-success btn-sm" onclick="prorrogarPSS(${p.id})"><i class="fas fa-clock"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="excluirPSS(${p.id})"><i class="fas fa-trash"></i></button>
-                </td>
-            </tr>
-        `).join('');
+    
+    if (id) {
+        const p = pssData.find(x => x.id === parseInt(id));
+        if (p) Object.assign(p, dados);
+    } else {
+        dados.id = pssId++;
+        pssData.push(dados);
     }
+    
+    fecharModal('modalPSS');
+    renderizarTudo();
+}
 
-    function abrirModalPSS() {
-        document.getElementById('modalPssTitle').textContent = 'Novo PSS';
-        document.getElementById('pssEditId').value = '';
-        ['pssNome','pssMatricula','pssCargo','pssAdmissao','pssTermino'].forEach(id => document.getElementById(id).value = '');
-        document.getElementById('pssSituacao').value = 'Ativo';
-        document.getElementById('modalPSS').classList.add('open');
+function prorrogarPSS(id) {
+    const p = pssData.find(x => x.id === id);
+    if (!p) return;
+    const novaData = prompt('Nova data de término (YYYY-MM-DD):', p.termino);
+    if (novaData) {
+        p.termino = novaData;
+        p.situacao = 'Prorrogado';
+        renderizarTudo();
+        alert('Contrato prorrogado até ' + novaData);
     }
+}
 
-    function editarPSS(id) {
-        const p = pssData.find(x => x.id === id);
-        if (!p) return;
-        document.getElementById('modalPssTitle').textContent = 'Editar PSS';
-        document.getElementById('pssEditId').value = id;
-        document.getElementById('pssNome').value = p.nome;
-        document.getElementById('pssMatricula').value = p.matricula;
-        document.getElementById('pssCargo').value = p.cargo;
-        document.getElementById('pssAdmissao').value = p.admissao;
-        document.getElementById('pssTermino').value = p.termino;
-        document.getElementById('pssSituacao').value = p.situacao;
-        document.getElementById('modalPSS').classList.add('open');
+function arquivarPSS(id) {
+    if (!confirm('Deseja arquivar este contrato?')) return;
+    const p = pssData.find(x => x.id === id);
+    if (p) {
+        arquivoData.push({ 
+            nome: p.nome, 
+            matricula: p.matricula, 
+            tipo: 'PSS', 
+            dataTermino: p.termino || new Date().toISOString().split('T')[0],
+            motivo: p.situacao === 'Exonerado' ? 'Exoneração' : 'Encerramento'
+        });
+        pssData = pssData.filter(x => x.id !== id);
+        renderizarTudo();
+        alert('Registro arquivado com sucesso!');
     }
+}
 
-    function salvarPSS() {
-        const id = document.getElementById('pssEditId').value;
-        const data = {
-            nome: document.getElementById('pssNome').value,
-            matricula: document.getElementById('pssMatricula').value,
-            cargo: document.getElementById('pssCargo').value,
-            admissao: document.getElementById('pssAdmissao').value,
-            termino: document.getElementById('pssTermino').value,
-            situacao: document.getElementById('pssSituacao').value,
-            prorrogacoes: []
-        };
-        if (id) {
-            const p = pssData.find(x => x.id === parseInt(id));
-            if (p) { Object.assign(p, data); p.prorrogacoes = p.prorrogacoes || []; }
-        } else {
-            data.id = pssId++;
-            data.prorrogacoes = [];
-            pssData.push(data);
-        }
-        fecharModal('modalPSS');
-        renderAll();
+// ============================================
+// LICENÇAS - FUNÇÕES COMPLETAS
+// ============================================
+function renderLicencas() {
+    const busca = document.getElementById('licBusca').value.toLowerCase();
+    const filtro = document.getElementById('licFiltro').value;
+    const dados = licencasData.filter(l => {
+        const match = l.nome.toLowerCase().includes(busca) || l.matricula.includes(busca);
+        return match && (filtro === '' || l.situacao === filtro);
+    });
+    
+    const tbody = document.getElementById('licTbody');
+    if (!dados.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="vazio">Nenhum registro encontrado</td></tr>';
+        return;
     }
+    
+    tbody.innerHTML = dados.map(l => `
+        <tr>
+            <td>${l.nome}</td>
+            <td>${l.matricula}</td>
+            <td>${l.cargo}</td>
+            <td>${l.inicio}</td>
+            <td>${l.termino}</td>
+            <td>${l.motivo || '-'}</td>
+            <td><span class="badge ${l.situacao==='Em andamento'?'badge-green':l.situacao==='Encerrada'?'badge-gray':'badge-red'}">${l.situacao}</span></td>
+            <td>
+                <button class="btn btn-primary btn-sm" onclick="editarLicenca(${l.id})"><i class="fas fa-edit"></i></button>
+                ${l.situacao === 'Em andamento' ? `<button class="btn btn-warning btn-sm" onclick="interromperLicenca(${l.id})"><i class="fas fa-stop"></i></button>` : ''}
+                <button class="btn btn-danger btn-sm" onclick="arquivarLicenca(${l.id})"><i class="fas fa-archive"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
 
-    function prorrogarPSS(id) {
-        const p = pssData.find(x => x.id === id);
-        if (!p) return;
-        const novaData = prompt('Nova data de término (YYYY-MM-DD):', p.termino);
-        if (novaData) {
-            p.prorrogacoes = p.prorrogacoes || [];
-            p.prorrogacoes.push({ data: new Date().toISOString().split('T')[0], novoTermino: novaData });
-            p.termino = novaData;
-            p.situacao = 'Prorrogado';
-            renderAll();
-        }
+function abrirModalLicenca() {
+    document.getElementById('licTitulo').textContent = 'Nova Licença';
+    document.getElementById('licId').value = '';
+    ['licNome','licMatricula','licCargo','licInicio','licTermino','licMotivo'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('licSituacao').value = 'Em andamento';
+    abrirModal('modalLicenca');
+}
+
+function editarLicenca(id) {
+    const l = licencasData.find(x => x.id === id);
+    if (!l) return;
+    document.getElementById('licTitulo').textContent = 'Editar Licença';
+    document.getElementById('licId').value = id;
+    document.getElementById('licNome').value = l.nome;
+    document.getElementById('licMatricula').value = l.matricula;
+    document.getElementById('licCargo').value = l.cargo;
+    document.getElementById('licInicio').value = l.inicio;
+    document.getElementById('licTermino').value = l.termino;
+    document.getElementById('licMotivo').value = l.motivo || '';
+    document.getElementById('licSituacao').value = l.situacao;
+    abrirModal('modalLicenca');
+}
+
+function salvarLicenca() {
+    const id = document.getElementById('licId').value;
+    const dados = {
+        nome: document.getElementById('licNome').value,
+        matricula: document.getElementById('licMatricula').value,
+        cargo: document.getElementById('licCargo').value,
+        inicio: document.getElementById('licInicio').value,
+        termino: document.getElementById('licTermino').value,
+        motivo: document.getElementById('licMotivo').value,
+        situacao: document.getElementById('licSituacao').value
+    };
+    
+    if (!dados.nome || !dados.matricula || !dados.inicio || !dados.termino) {
+        alert('Preencha todos os campos obrigatórios!');
+        return;
     }
-
-    function excluirPSS(id) {
-        if (confirm('Deseja arquivar este PSS?')) {
-            const p = pssData.find(x => x.id === id);
-            if (p) {
-                arquivoData.push({ nome: p.nome, matricula: p.matricula, tipo: 'PSS', dataTermino: p.termino, motivo: 'Arquivado' });
-                pssData = pssData.filter(x => x.id !== id);
-                renderAll();
-            }
-        }
+    
+    if (id) {
+        const l = licencasData.find(x => x.id === parseInt(id));
+        if (l) Object.assign(l, dados);
+    } else {
+        dados.id = licId++;
+        licencasData.push(dados);
     }
+    
+    fecharModal('modalLicenca');
+    renderizarTudo();
+}
 
-    // ===== LICENÇAS =====
-    function renderLicencas() {
-        const search = document.getElementById('licSearch').value.toLowerCase();
-        const filtro = document.getElementById('licFilterSituacao').value;
-        const filtered = licencasData.filter(l => (l.nome.toLowerCase().includes(search) || l.matricula.includes(search)) && (filtro === '' || l.situacao === filtro));
-        document.getElementById('licencasTableBody').innerHTML = filtered.map(l => `
-            <tr>
-                <td>${l.nome}</td><td>${l.matricula}</td><td>${l.cargo}</td>
-                <td>${l.inicio}</td><td>${l.termino}</td><td>${l.motivo || ''
+function interromperLicenca(id) {
+    if (!confirm('Deseja interromper esta licença?')) return;
+    const l = licencasData.find(x => x.id === id);
+    if (l) {
+        l.situacao = 'Interrompida';
+        renderizarTudo();
+        alert('Licença interrompida!');
+    }
+}
+
+function arquivarLicenca(id) {
+    if (!confirm('Deseja arquivar esta licença?')) return;
+    const l = licencasData.find(x => x.id === id);
+    if (l) {
+        arquivoData.push({
+            nome: l.nome,
+            matricula: l.matricula,
+            tipo: 'Licença',
+            dataTermino: l.termino,
+            motivo: l.situacao === 'Interrompida' ? 'Interrompida' : 'Encerrada'
+        });
+        licencasData = licencasData.filter(x => x.id !== id);
+        renderizarTudo();
+        alert('Licença arquivada!');
+    }
+}
+
+// ============================================
+// CESSÕES - FUNÇÕES COMPLETAS
+// ============================================
+function renderCessoes() {
+    const busca = document.getElementById('cessBusca').value.toLowerCase();
+    const tipo = document.getElementById('cessFiltroTipo').value;
+    const situacao = document.getElementById('cessFiltroSituacao').value;
+    
+    const dados = cessoesData.filter(c => {
+        const match = c.nome.toLowerCase().includes(busca) || c.matricula.includes(busca);
+        return match && (tipo === '' || c.tipo === tipo) && (situacao === '' || c.situacao === situacao);
+    });
+    
+    const tbody = document.getElementById('cessTbody');
+    if (!dados.length) {
+        tbody.innerHTML = '<tr><td colspan="10" class="vazio">Nenhum registro encontrado</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = dados.map(c => `
+        <tr>
+            <td>${c.nome}</td>
+            <td>${c.matricula}</td>
+            <td>${c.cargo}</td>
+            <td><span class="badge ${c.tipo==='Cessão'?'badge-blue':'badge-green'}">${c.tipo}</span></td>
+            <td>${c.origem}</td>
+            <td>${c.destino}</td>
+            <td>${c.inicio}</td>
+            <td>${c.termino}</td>
+            <td><span class="badge ${c.situacao==='Ativa'?'badge-green':c.situacao==='Encerrada'?'badge-gray':'badge-red'}">${c.situacao}</span></td>
+            <td>
+                <button class="btn btn-primary btn-sm" onclick="editarCessao(${c.id})"><i class="fas fa-edit"></i></button>
+                ${c.situacao === 'Ativa' ? `<button class="btn btn-warning btn-sm" onclick="interromperCessao(${c.id})"><i class="fas fa-stop"></i></button>` : ''}
+                <button class="btn btn-danger btn-sm" onclick="arquivarCessao(${c.id})"><i class="fas fa-archive"></i></button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+function abrirModalCessao() {
+    document.getElementById('cessTitulo').textContent = 'Nova Cessão/Recepção';
+    document.getElementById('cessId').value = '';
+    ['cessNome','cessMatricula','cessCargo','cessOrigem','cessDestino','cessInicio','cessTermino'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('cessTipo').value = 'Cessão';
+    document.getElementById('cessSituacao').value = 'Ativa';
+    abrirModal('modalCessao');
+}
+
+function editarCessao(id) {
+    const c = cessoesData.find(x => x.id === id);
+    if (!c) return;
+    document.getElementById('cessTitulo').textContent = 'Editar Cessão';
+    document.getElementById('cessId').value = id;
+    document.getElementById('cessNome').value = c.nome;
+    document.getElementById('cessMatricula').value = c.matricula;
+    document.getElementById('cessCargo').value = c.cargo;
+    document.getElementById('cessTipo').value = c.tipo;
+    document.getElementById('cessOrigem').value = c.origem;
+    document.getElementById('cessDestino').value = c.destino;
+    document.getElementById('cessInicio').value = c.inicio;
+    document.getElementById('cessTermino').value = c.termino;
+    document.getElementById('cessSituacao').value = c.situacao;
+    abrirModal('modalCessao');
+}
+
+function salvarCessao() {
+    const id = document.getElementById('cessId').value;
+    const dados = {
+        nome: document.getElementById('cessNome').value,
+        matricula: document.getElementById('cessMatricula').value,
+        cargo: document.getElementById('cessCargo').value,
+        tipo: document.getElementById('cessTipo').value,
+        origem: document.getElementById('cessOrigem').value,
+        destino: document.getElementById('cessDestino').value,
+        inicio: document.getElementById('cessInicio').value,
+        termino: document.getElementById('cessTermino').value,
+        situacao: document.getElementById('cessSituacao').value
+    };
+    
+    if (!dados.nome || !dados.matricula || !dados.origem || !dados.destino || !dados.inicio || !dados.termino) {
+        alert('Preencha todos os campos obrigatórios!');
+        return;
+    }
+    
+    if (id) {
+        const c = cessoesData.find(x => x.id === parseInt(id));
+        if (c) Object.assign(c, dados);
+    } else {
+        dados.id = cessId++;
+        cessoesData.push(dados);
+    }
+    
+    fecharModal('modalCessao');
+    renderizarTudo();
+}
+
+function interromperCessao(id) {
+    if (!confirm('Deseja interromper esta cessão?')) return;
+    const c = cessoesData.find(x => x.id === id);
+    if (c) {
+        c.situacao = 'Interrompida';
+        renderizarTudo();
+        alert('Cessão interrompida!');
+    }
+}
+
+function arquivarCessao(id) {
+    if (!confirm('Deseja arquivar esta cessão?')) return;
+    const c = cessoesData.find(x => x.id === id);
+    if (c) {
+        arquivoData.push({
+            nome: c.nome,
+            matricula: c.matricula,
+            tipo: c.tipo,
+            dataTermino: c.termino,
+            motivo: c.situacao === 'Interrompida' ? 'Interrompida' : 'Encerrada'
+        });
+        cessoesData = cessoesData.filter(x => x.id !== id);
+        renderizarTudo();
+        alert('Cessão arquivada!');
+    }
+}
+
+// ============================================
+// ARQUIVO
+// ============================================
+function renderArquivo() {
+    const busca = document.getElementById('arqBusca').value.toLowerCase();
+    const dados = arquivoData.filter(a => a.nome.toLowerCase().includes(busca) || a.matricula.includes(busca));
+    
+    const tbody = document.getElementById('arqTbody');
+    if (!dados.length) {
+        tbody.innerHTML = '<tr><td colspan="5" class="vazio">Nenhum registro no arquivo</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = dados.map(a => `
+        <tr>
+            <td>${a.nome}</td>
+            <td>${a.matricula}</td>
+            <td>${a.tipo}</td>
+            <td>${a.dataTermino || '-'}</td>
+            <td>${a.motivo || '-'}</td>
+        </tr>
+    `).join('');
+}
+
+function exportarCSV() {
+    if (!arquivoData.length) {
+        alert('Não há registros para exportar!');
+        return;
+    }
+    
+    let csv = 'Nome,Matrícula,Tipo,Data Término,Motivo\n';
+    arquivoData.forEach(a => {
+        csv += `${a.nome},${a.matricula},${a.tipo},${a.dataTermino || ''},${a.motivo || ''}\n`;
+    });
+    
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `arquivo_${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
+}
+
+// ============================================
+// ALERTAS
+// ============================================
+function renderAlertas() {
+    const hoje = new Date();
+    const daqui30 = new Date(); daqui30.setDate(daqui30.getDate() + 30);
+    const daqui60 = new Date(); daqui60.setDate(daqui60.getDate() + 60);
+    const daqui90 = new Date(); daqui90.setDate(daqui90.getDate() + 90);
+    
+    const todos = [...pssData, ...licencasData, ...cessoesData];
+    const vencendo30 = todos.filter(r => r.termino && new Date(r.termino) >= hoje && new Date(r.termino) <= daqui30);
+    const vencendo60 = todos.filter(r => r.termino && new Date(r.termino) > daqui30 && new Date(r.termino) <= daqui60);
+    const vencendo90 = todos.filter(r => r.termino && new Date(r.termino) > daqui60 && new Date(r.termino) <= daqui90);
+    const vencidos = todos.filter(r => r.termino && new Date(r.termino) < hoje && r.situacao !== 'Encerrado' && r.situacao !== 'Exonerado');
+    
+    document.getElementById('alertGrid').innerHTML = `
+        <div class="alert-item"><span class="count" style="color:#d69e2e;">${vencendo30.length}</span> Vencem em 30 dias</div>
+        <div class="alert-item"><span class="count" style="color:#2b6cb0;">${vencendo60.length}</span> Vencem em 60 dias</div>
+        <div class="alert-item"><span class="count" style="color:#2b6cb0;">${vencendo90.length}</span> Vencem em 90 dias</div>
+        <div class="alert-item"><span class="count" style="color:#e53e3e;">${vencidos.length}</span> Vencidos pendentes</div>
+        <div class="alert-item"><span class="count">${pssData.filter(p => p.situacao === 'Ativo' || p.situacao === 'Prorrogado').length}</span> PSS ativos</div>
+        <div class="alert-item"><span class="count">${licencasData.filter(l => l.situacao === 'Em andamento').length}</span> Licenças em andamento</div>
+    `;
+    
+    const lista = document.getElementById('alertasLista');
+    if (vencidos.length) {
+        lista.innerHTML = `<div style="background:#fed7d7; border-radius:12px; padding:15px; border-left:4px solid #e53e3e;">
+            <strong><i class="fas fa-exclamation-circle" style="color:#e53e3e;"></i> Registros vencidos:</strong><br>
+            ${vencidos.map(r => `• ${r.nome} (${r.termino})`).join('<br>')}
+        </div>`;
+    } else {
+        lista.innerHTML = '<div style="color:#38a169; background:#c6f6d5; border-radius:12px; padding:15px;"><i class="fas fa-check-circle"></i> Nenhum registro vencido pendente!</div>';
+    }
+}
+
+// ============================================
+// INICIAR
+// ============================================
+init();
+</script>
+</body>
+</html>
